@@ -1,0 +1,29 @@
+/* Enter your custom styles here */
+.mainpage{
+    background-image: url("https://i.ibb.co/1fzcDgHv/Your-paragraph-text-2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.mainpage2{
+    background-image: url("https://plus.unsplash.com/premium_photo-1688678097492-bae9a5000d40?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW90JTIwbmV0d29ya3xlbnwwfHwwfHx8MA%3D%3D");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.simpleformclass{
+    background-color: rgb(176, 252, 227);
+    margin: 5px;
+}
+.formdetails{
+    margin: 2px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgb(243, 248, 252);
+}
+.formdetailstext{
+    margin: 2px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+.readingstable{
+    margin: 5px;
+}

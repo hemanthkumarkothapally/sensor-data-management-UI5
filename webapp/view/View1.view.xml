@@ -1,0 +1,142 @@
+<mvc:View
+    xmlns:micro="sap.suite.ui.microchart"
+    xmlns:data="sap.viz.ui5.data"
+    xmlns:controls="sap.viz.ui5.controls"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    controllerName="com.sdm.sensordataui5.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <SplitApp id="splitApp">
+        <!-- Master (List) Page -->
+        <masterPages>
+            <Page
+                id="masterpage"
+                title="Devices"
+            >
+                <List
+                    id="devicelistitem"
+                    items="{path:'/Devices'}"
+                >
+                    <items>
+                        <StandardListItem
+                            title="{Name}"
+                            description="{Location}"
+                            type="Navigation"
+                            press="onPressgotoDetails"
+                        />
+                    </items>
+                </List>
+            </Page>
+        </masterPages>
+
+        <!-- Detail Page -->
+        <detailPages >
+            <Page
+                id="detail"
+                class="mainpage"
+                title="Sensor Data management"
+                backgroundDesign="Solid"
+            >
+                <content >
+                    <!-- <micro:InteractiveDonutChart>
+                        <micro:segments >
+                            <micro:InteractiveDonutChartSegment
+                                value="{/ID}"
+                                label="{Name}"
+                                color="Good"
+                            />
+                            <micro:InteractiveDonutChartSegment
+                                value="25"
+                                label="Furniture"
+                                color="Neutral"
+                            />
+                            <micro:InteractiveDonutChartSegment
+                                value="33"
+                                label="Office Supplies"
+                                color="Critical"
+                            />
+                        </micro:segments>
+                    </micro:InteractiveDonutChart> -->
+                </content>
+            </Page>
+            <Page
+                id="detailPage"
+                class="mainpage2"
+                title="Device Details"
+                showNavButton="true"
+                navButtonPress="onNavBack"
+            >
+                <VBox >
+                    <ObjectHeader title="{Name}" />
+                    <form:SimpleForm class="simpleformclass" backgroundDesign="Transparent">
+                        <form:content>
+                        <VBox class="formdetails">
+                            <!-- <ObjectAttribute
+                            class="formdetails"
+                            id="selecteddevicenameId"
+                                title="Device Name"
+                                text="{Name}"
+                            /> -->
+                            <ObjectAttribute
+                            id="selecteddeviceID"
+                            class="formdetailstext"
+                                title="Device ID"
+                                text="{ID}"
+                            />
+                            <ObjectAttribute
+                            class="formdetailstext"
+                            id="selecteddevicelocationId"
+                                title="Device Location"
+                                text="{Location}"
+                            />
+                            <ObjectAttribute
+                            class="formdetailstext"
+                                title="Purchase date "
+                                text="{purchasedate}"
+                            />
+                            <ObjectStatus 
+                            class="formdetailstext"
+                                title="Status "
+                                text="{Status}"
+                                state="{= ${Status} ==='Active' ? 'Success': 'Error'}"
+                            />
+                            </VBox>
+                        </form:content>
+                    </form:SimpleForm>
+                </VBox>
+                <Table id="readingstableID" class="readingstable" headerText="Device Sensor Readings" mode="SingleSelectMaster" selectionChange="onSelectingReadings" items="{path:'/Sensorreadings'}">
+                <columns>
+                <Column >
+                <Title text="Reading ID"></Title>
+                </Column>
+                <Column >
+                <Title text="device_ID"></Title>
+                </Column>
+                <Column >
+                <Title text="humidity"></Title>
+                </Column>
+                <Column >
+                <Title text="temperature"></Title>
+                </Column>
+                <Column >
+                <Title text="timeofreading"></Title>
+                </Column>
+                </columns>
+                
+                <items>
+                <ColumnListItem >
+                <Text id="text123" text="{ID}"></Text>
+                <Text text="{device_ID}"></Text>
+                <Text text="{humidity}"></Text>
+                <Text text="{temperature}"></Text>
+                <Text text="{timeofreading}"></Text>
+                </ColumnListItem>
+                </items>
+                </Table>
+            </Page>
+        </detailPages>
+    </SplitApp>
+</mvc:View>

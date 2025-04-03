@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="sensorservice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotation Term="Core.Links">
+                <Collection>
+                    <Record>
+                        <PropertyValue Property="rel" String="author"/>
+                        <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Devices" EntityType="sensorservice.Devices">
+                    <NavigationPropertyBinding Path="reading" Target="Sensorreadings"/>
+                </EntitySet>
+                <EntitySet Name="Sensorreadings" EntityType="sensorservice.Sensorreadings">
+                    <NavigationPropertyBinding Path="device" Target="Devices"/>
+                </EntitySet>
+                <EntitySet Name="Alertmessage" EntityType="sensorservice.Alertmessage"/>
+            </EntityContainer>
+            <EntityType Name="Devices">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="150"/>
+                <Property Name="purchasedate" Type="Edm.Date"/>
+                <Property Name="Status" Type="Edm.String"/>
+                <NavigationProperty Name="reading" Type="Collection(sensorservice.Sensorreadings)" Partner="device">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Sensorreadings">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="device" Type="sensorservice.Devices" Partner="reading">
+                    <ReferentialConstraint Property="device_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="device_ID" Type="Edm.Guid"/>
+                <Property Name="timeofreading" Type="Edm.DateTimeOffset"/>
+                <Property Name="temperature" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="humidity" Type="Edm.Decimal" Scale="variable"/>
+            </EntityType>
+            <EntityType Name="Alertmessage">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="device" Type="Edm.Guid"/>
+                <Property Name="message" Type="Edm.String" MaxLength="250"/>
+                <Property Name="condition" Type="Edm.String" MaxLength="50"/>
+                <Property Name="timerange" Type="Edm.DateTimeOffset"/>
+            </EntityType>
+            <Annotations Target="sensorservice.Devices/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="sensorservice.Devices/Status">
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Active"/>
+                            <PropertyValue Property="Value" String="Active"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="Inactive"/>
+                            <PropertyValue Property="Value" String="Inactive"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="sensorservice.Sensorreadings/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="sensorservice.Alertmessage/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
