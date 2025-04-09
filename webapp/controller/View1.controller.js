@@ -33,6 +33,7 @@ sap.ui.define([
                         value1: aSelectedDeviceID
                     });
                     oTablebindingData.filter([aFilter])
+                    console.log(oTablebindingData);
 
                 }).catch(() => {
                     sap.m.MessageToast.show("Failed to load details");
